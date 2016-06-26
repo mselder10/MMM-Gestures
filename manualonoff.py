@@ -22,32 +22,30 @@ b = 0.0
 
 pi = pigpio.pi()
 
-
+""" If you use a ledstrip in combination with MagicMirror and pigpio uncomment next 3 here
 def setLights(pin, brightness):
 	realBrightness = int(int(brightness) * (float(bright) / 255.0))
 	pi.set_PWM_dutycycle(pin, realBrightness)
-
+"""
 
 
 tmp = os.popen("sudo /opt/vc/bin/tvservice -s").read()
 if tmp.find("off") == -1:
 	print "monitor is on"
-	setLights(RED_PIN,0)
-	setLights(GREEN_PIN,0)
-	setLights(BLUE_PIN,0)
+	""" If you use a ledstrip in combination with MagicMirror and pigpio uncomment here
+	#setLights(RED_PIN,0)
+	#setLights(GREEN_PIN,0)
+	#setLights(BLUE_PIN,0)
+	"""
 	os.system("tvservice -o")
-	##ser = serial.Serial('/dev/ttyACM0',9600)
-	##time.sleep(2)
-	##ser.write('0')
-	##ser.close()
+
 else:
 	print "monitor is off"
 	os.system("tvservice -p")
-	setLights(RED_PIN,sys.argv[1])
-	setLights(GREEN_PIN,sys.argv[1])
-	setLights(BLUE_PIN,sys.argv[1])
-	##ser = serial.Serial('/dev/ttyACM0',9600)
-	##time.sleep(2)
-	##ser.write('1') ##tell arduino to to check for gestures
-	##ser.close()
+	""" If you use a ledstrip in combination with MagicMirror and pigpio uncomment uncomment here
+	#setLights(RED_PIN,sys.argv[1])
+	#setLights(GREEN_PIN,sys.argv[1])
+	#setLights(BLUE_PIN,sys.argv[1])
+	"""
+
 pi.stop()

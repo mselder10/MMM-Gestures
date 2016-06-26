@@ -32,8 +32,9 @@ module.exports = NodeHelper.create({
 			if(self.config.brightness == 306 ) self.config.brightness = 0;
 			self.sendSocketNotification('GESTURE0', self.config.brightness);
 			//console.log(self.config.brightness);
-			exec("python /home/pi/MagicMirror/python/brightness.py " + self.config.brightness, null);			
-			
+			/* If you use a ledstrip in combination with MagicMirror and pigpio uncomment here
+			exec("python /home/pi/MagicMirror/MMM-gesturedetection/brightness.py " + self.config.brightness, null);			
+			*/
 			
 			
 			}
@@ -67,7 +68,8 @@ module.exports = NodeHelper.create({
 			self.sendSocketNotification('GESTURE2', true);
 			
 			console.log("Gesture GPIO:16 detected");
-			exec("python /home/pi/MagicMirror/python/manualonoff.py " + self.config.brightness, null);
+			// Turn monitor on/off
+			exec("python /home/pi/MagicMirror/MMM-gesturedetecion/manualonoff.py " + self.config.brightness, null);
 			}
 			
 		

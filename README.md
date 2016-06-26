@@ -6,10 +6,12 @@ Special thanks goes to [Paviro](https://github.com/paviro) and [ptrbld](https://
 
 
 ## Installation
-1. Connect HC-SR04 and LEDs to Arduino and connect Arduino to Raspi [Breadboard prototype](http://i.imgur.com/wyho6zg.png)
+1. Connect HC-SR04 and LEDs to Arduino and connect Arduino to Pi [Breadboard prototype](http://i.imgur.com/wyho6zg.png)
 2. Flash Arduino with gesturedection.ino
-3. Navigate into your MagicMirror's `modules` folder and execute `git clone https://github.com/crshx/MMM-gesturedetection`. A new folder will appear navigate into it.
-4. Execute `npm install` to install the node dependencies.
+3. (optional) connect RGB-LED Strip to Pi
+4. Navigate into your MagicMirror's `modules` folder and execute `git clone https://github.com/crshx/MMM-gesturedetection`. A new folder will appear navigate into it.
+5. Execute `npm install` to install the node dependencies.
+6. (optional) uncomment lines for LED Strip
 
 
 ## Using the module
@@ -66,7 +68,7 @@ The following properties can be configured:
 The MIT License (MIT)
 =====================
 
-Copyright © 2016 PtrBld
+Copyright © 2016 
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
