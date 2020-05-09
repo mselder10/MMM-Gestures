@@ -1,16 +1,16 @@
+/*
+Two gestures are recognized by this script:
+  - Swipe from right to left (GPIOOUT1 set to high)
+  - Swipe from left to right (GPIOOUT2 set to high)
+*/
 
-int TRIGPINUS1 = 6;    
-int ECHOPINUS1 = 7;    
-int TRIGPINUS2 = 12;    
-int ECHOPINUS2 = 13;  
+int TRIGPIN1 = 6;
+int ECHOPIN1 = 7;
+int TRIGPIN2 = 12;
+int ECHOPIN2 = 13;
 
 int GPIOOUT1 = 2;
 int GPIOOUT2 = 3;
-int GPIOOUT3 = 4;
-int GPIOOUT4 = 8;
-
-int LED1 = 10;
-int LED2 = 11;
 
 const long INTERVAL = 1300;
 const int RANGEMAX = 25;
@@ -19,11 +19,10 @@ bool record = false;
 unsigned long previousMillis = 0;   
 unsigned long recstart = 0;  
 unsigned long sensor1 = 0;  
-unsigned long sensor2 = 0;  
+unsigned long sensor2 = 0;
 long duration, duration2, cm, cm2;
 
 bool on = false;
-
 
 
 void setup() 
@@ -32,18 +31,12 @@ void setup()
   
   pinMode(GPIOOUT1, OUTPUT);
   pinMode(GPIOOUT2, OUTPUT);
-  pinMode(GPIOOUT3, OUTPUT);
-  pinMode(GPIOOUT4, OUTPUT);
   
-  pinMode(TRIGPINUS1, OUTPUT);
-  pinMode(ECHOPINUS1, INPUT);
-  pinMode(TRIGPINUS2, OUTPUT);
-  pinMode(ECHOPINUS2, INPUT);
-
-  pinMode(LED1, OUTPUT);
-  pinMode(LED2, OUTPUT);
+  pinMode(TRIGPIN1, OUTPUT);
+  pinMode(ECHOPIN1, INPUT);
+  pinMode(TRIGPIN2, OUTPUT);
+  pinMode(ECHOPIN2, INPUT);
 }
-
  
 void loop()
 {
@@ -65,21 +58,21 @@ void loop()
   if(on)
   {
      
-    digitalWrite(TRIGPINUS1, LOW);
+    digitalWrite(TRIGPIN1, LOW);
     delayMicroseconds(5);
-    digitalWrite(TRIGPINUS1, HIGH);
+    digitalWrite(TRIGPIN1, HIGH);
     delayMicroseconds(10);
-    digitalWrite(TRIGPINUS1, LOW);
+    digitalWrite(TRIGPIN1, LOW);
    
-    duration = pulseIn(ECHOPINUS1, HIGH);
+    duration = pulseIn(ECHOPIN1, HIGH);
   
-    digitalWrite(TRIGPINUS2, LOW);
+    digitalWrite(TRIGPIN2, LOW);
     delayMicroseconds(5);
-    digitalWrite(TRIGPINUS2, HIGH);
+    digitalWrite(TRIGPIN2, HIGH);
     delayMicroseconds(10);
-    digitalWrite(TRIGPINUS2, LOW);
+    digitalWrite(TRIGPIN2, LOW);
       
-    duration2 = pulseIn(ECHOPINUS2, HIGH);
+    duration2 = pulseIn(ECHOPIN2, HIGH);
    
     // convert the time into a distance
     cm = (duration/2) / 29.1;
@@ -98,22 +91,12 @@ void loop()
     unsigned long currentMillis = millis();
     if(cm > 5 && cm < RANGEMAX)
     {
-      sensor1 = (millis() - recstart);
-      digitalWrite(LED1, HIGH);                  
-    }
-     else
-    {
-      digitalWrite(LED1, LOW);
+      sensor1 = (millis() - recstart);           
     }
     
     if(cm2 > 5 && cm2 < RANGEMAX)
     {
-      sensor2 = (millis() - recstart);
-      digitalWrite(LED2, HIGH);             
-    }
-    else
-    {
-      digitalWrite(LED2, LOW);
+      sensor2 = (millis() - recstart);      
     }
   
     if(millis() > (recstart + INTERVAL) && record)
@@ -124,7 +107,7 @@ void loop()
         Serial.println("GESTURE: RIGHT TO LEFT");
         digitalWrite(GPIOOUT1, HIGH);   
         delay(50);  
-        digitalWrite(GPIOOUT1, LOW);   
+        digitalWrite(GPIOOUT1, LOW);
       }
       if((sensor2 > sensor1) && sensor1 != 0 && sensor2 !=0)
       {
@@ -132,22 +115,6 @@ void loop()
         digitalWrite(GPIOOUT2, HIGH);   
         delay(50);                     
         digitalWrite(GPIOOUT2, LOW);   
-      } 
-      if(sensor1 == 0 && sensor2 != 0)
-      {
-        Serial.println("GESTURE: HOLD LEFT");
-        digitalWrite(GPIOOUT3, HIGH);   
-        delay(50);                       
-        digitalWrite(GPIOOUT3, LOW); 
-      }
-      if(sensor2 == 0 && sensor1 != 0) 
-      {
-        Serial.println("GESTURE: HOLD RIGHT");
-        digitalWrite(GPIOOUT4, HIGH);   
-        delay(50);                  
-        digitalWrite(GPIOOUT4, LOW);  
-     
-      
       }
       /*// Debug thinx 
       Serial.print("Recstart:");

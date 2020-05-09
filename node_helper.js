@@ -31,12 +31,6 @@ module.exports = NodeHelper.create({
 			self.config.brightness += 51;
 			if(self.config.brightness == 306 ) self.config.brightness = 0;
 			self.sendSocketNotification('GESTURE0', self.config.brightness);
-			//console.log(self.config.brightness);
-			/* If you use a ledstrip in combination with MagicMirror and pigpio uncomment here
-			exec("python /home/pi/MagicMirror/modules/MMM-gesturedetection/brightness.py " + self.config.brightness, null);			
-			*/
-			
-			
 			}
 		
 
