@@ -1,9 +1,5 @@
 #!/usr/bin/python
 
-RED_PIN   = 17
-GREEN_PIN = 22
-BLUE_PIN  = 24
-
 import subprocess
 import os
 import time
@@ -14,11 +10,6 @@ import pigpio
 import time
 import serial
 from thread import start_new_thread
-
-bright = 255
-r = 255.0
-g = 0.0
-b = 0.0
 
 pi = pigpio.pi()
 
