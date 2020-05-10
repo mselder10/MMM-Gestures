@@ -1,24 +1,31 @@
+/* Magic Mirror
+* Module: MMM-Gestures
+*
+* By Mary Stuart Elder
+* Modeled after MMM-PIR-Sensor (by Paul-Vincent Roll) and MMM-gesturedetection (by Chris Linzg)
+*/
 
-Module.register('MMM-gesturedetection',{	
+Module.register('MMM-Gestures',{
 	defaults: {
 		gesture0PIN: 21,
 		gesture1PIN: 20,
-		gesture2PIN: 16,
-		gesture3PIN: 12,
 		//time in miliseconds before another button click is recognized 
 		clickDelay: 200,	
-		brightness: 0,
-	},	
+		//time in seconds before screen times out when no gesture is made
+		powerSavingDelay: 60,
+		user: "Stu",
+	},
 	// Override socket notification handler.
 	socketNotificationReceived: function(notification, payload) {
 		
+		// Swipe right to left --> switch to Joe's info
 		if (notification === 'GESTURE0') {
 			this.pressed0 = true;
 			this.sendNotification("SHOW_ALERT", {type: "notification", title:"GES0(HR)", message:"brightness:" + payload%10});
 			this.sendNotification("BRIGHTNESS", payload, this.name);
-			
-           
         }
+
+		// Swipe left to right --> switch to Stu's info
 		if (notification === 'GESTURE1' && !this.pressed1) {
 			this.pressed1 = true;
 			this.sendNotification("SHOW_ALERT", {type: "notification", title:"GES1(HL)", message:"hide Wunderlist"}); 
@@ -39,11 +46,15 @@ Module.register('MMM-gesturedetection',{
             });
    
 		}
+
+		// No gesture in awhile? Turn monitor off
+
+		// Gesture when screen was asleep? Turn monitor on
+		
 		if (notification === 'GESTURE2' && !this.pressed2) {
 			this.pressed2 = true;
 			this.sendNotification("SHOW_ALERT", {type: "notification", title:"GES2(RL)", message:"monitor off"}); 
 			
-            
         }
 		else if (notification === 'GESTURE2' && this.pressed2) { 
 			this.pressed2 = false;
