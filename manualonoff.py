@@ -16,7 +16,7 @@ pi = pigpio.pi()
 tmp = os.popen("sudo /opt/vc/bin/tvservice -s").read()
 if tmp.find("off") == -1:
 	print "monitor is on, turn it off"
-	os.system("tvservice -o") # Turns monitor off
+	os.system("tvservice -o")
 
 else:
 	print "monitor is off, turn it on"
