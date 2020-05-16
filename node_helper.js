@@ -17,10 +17,16 @@ module.exports = NodeHelper.create({
     this.started = false;
   },
 
-  // Calls Python script to wake/sleep the monitor
-  // Input: state --> 0=off, 1=on
-  setMonitorState: function (state) {
-	exec("vcgencmd display_power " + state, null);
+  // Wakes monitor/puts it to sleep
+  // Input: stateString --> "off" or "on""
+  setMonitorState: function (stateString) {
+	if(stateString == "off") {
+		exec("vcgencmd display_power 0", null);
+	}
+	else {
+		exec("vcgencmd display_power 1", null);
+	}
+	
   },
 
   // Wakes screen (if needed), resets the screen timeout timer, and sends notification
@@ -47,22 +53,22 @@ module.exports = NodeHelper.create({
 		const self = this;
 		this.config = payload
 
-		// Swipe right to left --> switch to Joe's info (if not already on Joe)
+		// Swipe right to left --> show to Joe's info and wake screen
 		this.ges0 = new gpio(this.config.gesture0PIN, 'in', 'rising',{ persistentWatch: true, debounceTimeout: this.config.clickDelay });
 		this.ges0.watch(function(err, state) {
 		  // check the state of the button
 		  // 1 == pressed, 0 == not pressed
-		  if(state == 1 && self.config.user != "Joe") {
+		  if(state == 1) {
 			actionsOnGesture(21, 0, "Joe");
 			}
 		});
 
-		// Swipe left to right --> switch to Stu's info (if not already on Stu)
+		// Swipe left to right --> show to Stu's info and wake screen
 		this.ges1 = new gpio(this.config.gesture1PIN, 'in', 'rising',{ persistentWatch: true, debounceTimeout: this.config.clickDelay });
 		this.ges1.watch(function(err, state) {
 		  // check the state of the button
 		  // 1 == pressed, 0 == not pressed
-		  if(state == 1 && self.config.user != "Stu") {
+		  if(state == 1) {
 			actionsOnGesture(20, 1, "Stu");
 			}
 		});
