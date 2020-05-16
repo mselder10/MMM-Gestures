@@ -18,14 +18,14 @@ Module.register('MMM-Gestures',{
 	// Override socket notification handler.
 	socketNotificationReceived: function(notification, payload) {
 		
-		// Swipe right to left --> switch to Joe's info
+		// Swipe right to left --> update modules with Joe's info
 		if (notification === 'GESTURE0') {
 			this.pressed0 = true;
 			this.sendNotification("SHOW_ALERT", {type: "notification", title:"GES0(HR)", message:"brightness:" + payload%10});
 			this.sendNotification("BRIGHTNESS", payload, this.name);
         }
 
-		// Swipe left to right --> switch to Stu's info
+		// Swipe left to right --> update modules with Stu's info
 		if (notification === 'GESTURE1' && !this.pressed1) {
 			this.pressed1 = true;
 			this.sendNotification("SHOW_ALERT", {type: "notification", title:"GES1(HL)", message:"hide Wunderlist"}); 

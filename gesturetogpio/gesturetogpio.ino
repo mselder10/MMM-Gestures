@@ -4,16 +4,16 @@ Two gestures are recognized by this script:
   - Swipe from left to right (GPIOOUT2 set to high)
 */
 
-int TRIGPIN1 = 6;
+int TRIGPIN1 = 5;
 int ECHOPIN1 = 7;
 int TRIGPIN2 = 12;
 int ECHOPIN2 = 13;
 
-int GPIOOUT1 = 2;
-int GPIOOUT2 = 3;
+int GPIOOUT1 = 8;
+int GPIOOUT2 = 9;
 
 const long INTERVAL = 1300;
-const int RANGEMAX = 25;
+const int RANGEMAX = 90;
 
 bool record = false;
 unsigned long previousMillis = 0;   
@@ -28,6 +28,7 @@ bool on = false;
 void setup() 
 {
   Serial.begin(9600);
+  Serial.println("Beginning");
   
   pinMode(GPIOOUT1, OUTPUT);
   pinMode(GPIOOUT2, OUTPUT);
@@ -40,23 +41,24 @@ void setup()
  
 void loop()
 {
-  if (Serial.available() > 0) 
-  {
-    int inByte = Serial.read();
-
-    if(inByte == '1')
-    {
-      on = true;        
-    }
-    else if(inByte == '0')
-    {
-      on = false;  
-         
-    }    
-  }
- 
-  if(on)
-  {
+//  if (Serial.available() > 0) 
+//  {
+//    int inByte = Serial.read();
+//
+//    if(inByte == '1')
+//    {
+//      on = true;        
+//    }
+//    else if(inByte == '0')
+//    {
+//      on = false;  
+//         
+//    }    
+//  }
+//  Serial.println(on);
+// 
+//  if(on)
+//  {
      
     digitalWrite(TRIGPIN1, LOW);
     delayMicroseconds(5);
@@ -77,6 +79,8 @@ void loop()
     // convert the time into a distance
     cm = (duration/2) / 29.1;
     cm2 = (duration2/2) / 29.1;
+    Serial.println(cm);
+    Serial.println(cm2);
    
     if((cm > 5 && cm < RANGEMAX) || (cm2 > 5 && cm2 < RANGEMAX))
     {
@@ -127,7 +131,7 @@ void loop()
       sensor1 = 0;
       sensor2 = 0;
       recstart = 0;
-    }
+//    }
       
   }
   
