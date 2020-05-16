@@ -18,9 +18,9 @@ module.exports = NodeHelper.create({
   },
 
   // Calls Python script to wake/sleep the monitor
-  // Input: stateString --> either "on" or "off"
-  setMonitorState: function (stateString) {
-	exec("python /home/pi/MagicMirror/modules/MMM-Gestures/manualonoff.py " + stateString, null);
+  // Input: state --> 0=off, 1=on
+  setMonitorState: function (state) {
+	exec("vcgencmd display_power " + state, null);
   },
 
   // Wakes screen (if needed), resets the screen timeout timer, and sends notification
