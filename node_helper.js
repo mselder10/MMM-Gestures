@@ -45,13 +45,13 @@ module.exports = NodeHelper.create({
 	// send notification for broadcast
 	console.log("Gesture GPIO:{} detected".format(pin));
 	self.sendSocketNotification('GESTURE{}'.format(number), self.config.user);
-  }
+  },
 
   // Subclass socketNotificationReceived received.
   socketNotificationReceived: function(notification, payload) {
 	if (notification === 'GESTURE_CONFIG' && this.started == false) {     
 		const self = this;
-		this.config = payload
+		this.config = payload;
 
 		// Swipe right to left --> show to Joe's info and wake screen
 		this.ges0 = new gpio(this.config.gesture0PIN, 'in', 'rising',{ persistentWatch: true, debounceTimeout: this.config.clickDelay });
@@ -73,8 +73,8 @@ module.exports = NodeHelper.create({
 			}
 		});
 
-		this.started = true
-    };
+		this.started = true;
+    }
   }
   
 });

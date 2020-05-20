@@ -13,7 +13,7 @@ Module.register('MMM-Gestures',{
 		clickDelay: 200,	
 		//time in seconds before screen times out when no gesture is made
 		powerSavingDelay: 60,
-		user: "Stu",
+		user: "Stu"
 	},
 	// Override socket notification handler.
 	socketNotificationReceived: function(notification, payload) {
@@ -55,7 +55,5 @@ Module.register('MMM-Gestures',{
 		this.pressed1 = false;
 		this.sendSocketNotification('GESTURE_CONFIG', this.config);
 		Log.info('Starting module: ' + this.name);
-	},
-	
-	
+	}
 });

@@ -13,7 +13,7 @@ int GPIOOUT1 = 8;
 int GPIOOUT2 = 9;
 
 const long INTERVAL = 1300;
-const int RANGEMAX = 90;
+const int RANGEMAX = 40;
 
 bool record = false;
 unsigned long previousMillis = 0;   
@@ -40,26 +40,7 @@ void setup()
 }
  
 void loop()
-{
-//  if (Serial.available() > 0) 
-//  {
-//    int inByte = Serial.read();
-//
-//    if(inByte == '1')
-//    {
-//      on = true;        
-//    }
-//    else if(inByte == '0')
-//    {
-//      on = false;  
-//         
-//    }    
-//  }
-//  Serial.println(on);
-// 
-//  if(on)
-//  {
-     
+{     
     digitalWrite(TRIGPIN1, LOW);
     delayMicroseconds(5);
     digitalWrite(TRIGPIN1, HIGH);
@@ -79,8 +60,8 @@ void loop()
     // convert the time into a distance
     cm = (duration/2) / 29.1;
     cm2 = (duration2/2) / 29.1;
-    Serial.println(cm);
-    Serial.println(cm2);
+    //Serial.println(cm);
+    //Serial.println(cm2);
    
     if((cm > 5 && cm < RANGEMAX) || (cm2 > 5 && cm2 < RANGEMAX))
     {
@@ -106,20 +87,36 @@ void loop()
     if(millis() > (recstart + INTERVAL) && record)
     {
       record = false; 
-      if((sensor2 < sensor1) && sensor1 != 0 && sensor2 !=0) 
+//      if((sensor2 < sensor1) && sensor1 != 0 && sensor2 !=0) 
+//      {
+//        Serial.println("GESTURE: RIGHT TO LEFT");
+//        digitalWrite(GPIOOUT1, HIGH);   
+//        delay(50);  
+//        digitalWrite(GPIOOUT1, LOW);
+//      }
+//      if((sensor2 > sensor1) && sensor1 != 0 && sensor2 !=0)
+//      {
+//        Serial.println("GESTURE: LEFT TO RIGHT");
+//        digitalWrite(GPIOOUT2, HIGH);   
+//        delay(50);                     
+//        digitalWrite(GPIOOUT2, LOW);   
+//      }
+
+      if(sensor1 == 0 && sensor2 != 0)
       {
-        Serial.println("GESTURE: RIGHT TO LEFT");
+        Serial.println("GESTURE: HOLD LEFT");
         digitalWrite(GPIOOUT1, HIGH);   
-        delay(50);  
-        digitalWrite(GPIOOUT1, LOW);
+        delay(50);                       
+        digitalWrite(GPIOOUT1, LOW); 
       }
-      if((sensor2 > sensor1) && sensor1 != 0 && sensor2 !=0)
+      if(sensor2 == 0 && sensor1 != 0) 
       {
-        Serial.println("GESTURE: LEFT TO RIGHT");
+        Serial.println("GESTURE: HOLD RIGHT");
         digitalWrite(GPIOOUT2, HIGH);   
-        delay(50);                     
-        digitalWrite(GPIOOUT2, LOW);   
+        delay(50);                  
+        digitalWrite(GPIOOUT2, LOW);
       }
+      
       /*// Debug thinx 
       Serial.print("Recstart:");
       //Serial.println(recstart);
@@ -131,8 +128,6 @@ void loop()
       sensor1 = 0;
       sensor2 = 0;
       recstart = 0;
-//    }
-      
   }
   
 }
